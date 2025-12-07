@@ -16,17 +16,11 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1', 
     'localhost', 
-    'samcoding-production.up.railway.app', 
-    'samcoding.uz', 
-    'www.samcoding.uz'
+    'medtasvir.up.railway.app'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://samcoding-production.up.railway.app', 
-    'https://samcoding.uz', 
-    'https://www.samcoding.uz',
-    'http://samcoding.uz',       # agar foydalanuvchi http ishlatsa
-    'http://www.samcoding.uz'
+    'https://medtasvir.up.railway.app'
 ]
 
 

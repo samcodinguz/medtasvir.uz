@@ -9,8 +9,8 @@ pillow = "*"
 gunicorn = "*"
 whitenoise = "*"
 numpy = "*"
-opencv-python = "*"
 tensorflow = "*"
+opencv-python-headless = "*"
 
 [dev-packages]
 
