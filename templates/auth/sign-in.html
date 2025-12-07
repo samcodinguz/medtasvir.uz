@@ -32,14 +32,38 @@
         <div class="container container-tight py-4">
             <div class="text-center mb-4">
                 <a href="{% url 'home' %}" class="navbar-brand navbar-brand-autodark" aria-label="SamCoding">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                        fill="currentColor" class="navbar-brand-image" style="width: 48px !important; height: 48px !important;">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path
-                            d="M17 2a5 5 0 0 1 5 5v10a5 5 0 0 1 -5 5h-10a5 5 0 0 1 -5 -5v-10a5 5 0 0 1 5 -5zm-1 12h-3a1 1 0 0 0 0 2h3a1 1 0 0 0 0 -2m-7.293 -5.707a1 1 0 0 0 -1.414 0l-.083 .094a1 1 0 0 0 .083 1.32l2.292 2.293l-2.292 2.293a1 1 0 0 0 1.414 1.414l3 -3a1 1 0 0 0 0 -1.414z"
-                            fill="#066fd1" style="fill: var(--tblr-primary, #066fd1)" />
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="navbar-brand-image m-0 p-0"
+                        style="width: 32px !important; height: 32px !important;"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="var(--tblr-primary, #066fd1)"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+
+                        <!-- Chap o'pka -->
+                        <path d="M6.081 20c1.612 0 2.919 -1.335 2.919 -2.98v-9.763
+                                c0 -.694 -.552 -1.257 -1.232 -1.257c-.205 0 -.405 .052 -.584 .15l-.13 .083
+                                c-1.46 1.059 -2.432 2.647 -3.404 5.824c-.42 1.37 -.636 2.962 -.648 4.775
+                                c-.012 1.675 1.261 3.054 2.877 3.161l.203 .007z"/>
+
+                        <!-- O'ng o'pka -->
+                        <path d="M17.92 20c-1.613 0 -2.92 -1.335 -2.92 -2.98v-9.763
+                                c0 -.694 .552 -1.257 1.233 -1.257c.204 0 .405 .052 .584 .15l.13 .083
+                                c1.46 1.059 2.432 2.647 3.405 5.824c.42 1.37 .636 2.962 .648 4.775
+                                c.012 1.675 -1.261 3.054 -2.878 3.161l-.202 .007z"/>
+
+                        <!-- Lung curve -->
+                        <path d="M9 12a3 3 0 0 0 3 -3a3 3 0 0 0 3 3"/>
+
+                        <!-- Traxeya -->
+                        <path d="M12 4v5"/>
+
                     </svg>
-                    <h1 class="lexend" style="margin-top: 5px;">SamCoding</h1>
+                    <h1 class="lexend" style="margin-top: 5px;">MedTasvir</h1>
                 </a>
             </div>
             {% block content %}

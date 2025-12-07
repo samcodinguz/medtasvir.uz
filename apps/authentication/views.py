@@ -56,10 +56,6 @@ def sign_up(request):
             messages.error(request, "Bu foydalanuvchi nomi allaqachon mavjud.")
             return redirect('sign-up')
         
-        if not remember_me:
-            messages.error(request, "Iltimos, barcha shartlarga rozilik bildiring")
-            return redirect('sign-up')
-        
         user = CustomUser(full_name=full_name, username=username)
         user.set_password(password)
         user.save()

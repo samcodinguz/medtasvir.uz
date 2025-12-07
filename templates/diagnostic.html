@@ -4,35 +4,24 @@
 
 {% block content %}
 
-<!-- FULLSCREEN TABLER LOADER -->
-<div id="fullpage-loader" class="page page-center" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: white; z-index:9999;">
-    <div class="container container-slim py-4">
-        <div class="text-center d-flex flex-column justify-content-center align-items-center vh-100">
-            <div class="text-secondary mb-3">Bajarilmoqda...</div>
-            <div class="progress progress-sm">
-                <div class="progress-bar progress-bar-indeterminate"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
+{% if result.check_list %}
 <div class="card mb-4">
     <div class="card-body py-md-4">
-        <form method="POST" enctype="multipart/form-data" id="analysis-form">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row">
-                <div class="col-9">
+                <h3 class="card-title">Diagnostika qilish uchun rasm tanlang</h3>
+                <div class="col-md-9 mb-3">
                     <input type="file" class="form-control" name="image" required>
                 </div>
-                <div class="col-3">
+                <div class="col-md-3 mb-3">
                     <button class="btn btn-primary w-100">Tahlil qilish</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
-
+{% endif %}
 {% if result and not result.check_list %}
 <!-- Natijalar bo‘limi -->
 <div class="card">
@@ -163,31 +152,4 @@
 
 {% endblock %}
 
-{% block js %}
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("analysis-form");
-
-    form.addEventListener("submit", function () {
-        document.getElementById("fullpage-loader").style.display = "block";
-    });
-});
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const bars = document.querySelectorAll(".progress-bar");
-
-    bars.forEach(bar => {
-        const targetWidth = bar.getAttribute("data-width");
-
-        bar.style.transition = "width 1.5s ease-in-out";
-        bar.style.width = "0%";
-
-        // Animation trigger
-        setTimeout(() => {
-            bar.style.width = targetWidth + "%";
-        }, 200);
-    });
-});
-</script>
-{% endblock %}
+{% block js %}{% endblock %}

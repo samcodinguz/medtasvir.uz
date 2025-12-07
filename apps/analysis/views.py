@@ -54,7 +54,6 @@ def diagnostic(request):
             normal_prob=probs["Sog‘lom"],
             pneumonia_prob=probs["Pnevmoniya"],
         )
-        time.sleep(3)
         return redirect('diagnostic')
     
     result = ImageProcessingResult.objects.filter(user=request.user).order_by('-created_at').first()

@@ -12,22 +12,62 @@
     <title>{% block title %}{{ page_title }}{% endblock %}</title>
     {% include 'include/css-links.html' %}
     {% block css %}
-    
+
 
     {% endblock %}
-</head> 
+</head>
 
 <body>
-    
+    <div class="page page-center" id="fullpage-loader">
+        <div class="container container-slim py-4">
+            <div class="text-center">
+                <div class="mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="navbar-brand-image m-0 p-0"
+                        style="width: 32px !important; height: 32px !important;" viewBox="0 0 24 24" fill="none"
+                        stroke="var(--tblr-primary, #066fd1)" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+
+                        <!-- Chap o'pka -->
+                        <path d="M6.081 20c1.612 0 2.919 -1.335 2.919 -2.98v-9.763
+                                c0 -.694 -.552 -1.257 -1.232 -1.257c-.205 0 -.405 .052 -.584 .15l-.13 .083
+                                c-1.46 1.059 -2.432 2.647 -3.404 5.824c-.42 1.37 -.636 2.962 -.648 4.775
+                                c-.012 1.675 1.261 3.054 2.877 3.161l.203 .007z" />
+
+                        <!-- O'ng o'pka -->
+                        <path d="M17.92 20c-1.613 0 -2.92 -1.335 -2.92 -2.98v-9.763
+                                c0 -.694 .552 -1.257 1.233 -1.257c.204 0 .405 .052 .584 .15l.13 .083
+                                c1.46 1.059 2.432 2.647 3.405 5.824c.42 1.37 .636 2.962 .648 4.775
+                                c.012 1.675 -1.261 3.054 -2.878 3.161l-.202 .007z" />
+
+                        <!-- Lung curve -->
+                        <path d="M9 12a3 3 0 0 0 3 -3a3 3 0 0 0 3 3" />
+
+                        <!-- Traxeya -->
+                        <path d="M12 4v5" />
+
+                    </svg>
+                </div>
+                <div class="text-secondary mb-3">Sahifa yuklanmoqda...</div>
+                <div class="progress progress-sm">
+                    <div class="progress-bar progress-bar-indeterminate"></div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="page">
         <div class="position-fixed top-0 end-0 p-3" style="z-index: 1080">
             {% for message in messages %}
-            <div class="alert alert-important alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %} alert-dismissible" role="alert">
+            <div class="alert alert-important alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %} alert-dismissible"
+                role="alert">
                 <h4 class="alert-heading me-5">
-                    {% if message.tags == 'error' %}<i class="icon ti ti-info-circle me-1"></i>{% else %}<i class="icon ti ti-check me-1"></i>{% endif %}
+                    {% if message.tags == 'error' %}<i class="icon ti ti-info-circle me-1"></i>{% else %}<i
+                        class="icon ti ti-check me-1"></i>{% endif %}
                     {{ message }}
                 </h4>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
             </div>
             {% endfor %}
         </div>
@@ -63,33 +103,95 @@
             <div class="page-body">
                 <div class="container-xl">
                     <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                        <div class="toast" id="toast-simple" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+                        <div class="toast" id="toast-simple" role="alert" aria-live="assertive" aria-atomic="true"
+                            data-bs-autohide="false">
                             <div class="toast-body bg-primary-lt d-flex justify-content-between align-items-center">
                                 Nusxalandi
-                                <button type="button" class="ms-2 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                <button type="button" class="ms-2 btn-close" data-bs-dismiss="toast"
+                                    aria-label="Close"></button>
                             </div>
                         </div>
                     </div>
                     <!-- Content here -->
                     {% block content %}
-                    <div class="card mb-4">
-                        <div class="card-body py-md-5">
-                            <h1 class="card-title px-5 text-center mb-3">Tibbiy tasvirlar asosida avtomatik tashxislash platformasi</h1>
-                            <p class="text-center mb-5">Tibbiy tasvirlarga raqamli ishlov berish va sun'iy intellekt algoritmlari asosida kasalliklarni avtomatik aniqlash tizimi</p>
-                            <div class="d-flex justify-content-center">
-                                <a href="{% url 'diagnostic' %}" class="btn btn-primary btn-md-lg"><i class="ti ti-text-scan-2 fs-2 me-2"></i>Diagnostika boshlash</a>
+                    <div class="row">
+                        <div class="card mb-3 bg-transparent border-0 shadow-none">
+                                <div class="card-body markdown px-md-0 mx-md-0">
+                                    <h1 class="card-title mb-3">
+                                        Tibbiy tasvirlarni chuqur o‘rganish asosida kasalliklarni avtomatik aniqlovchi
+                                        intellektual diagnostika platformasi
+                                    </h1>
+                                    <p class="text-secondary mb-5" style="text-align: justify;">
+                                        Ushbu platforma ko‘krak qafasi rentgen tasvirlarini sun’iy intellekt yordamida
+                                        tahlil qilishga mo‘ljallangan bo‘lib, COVID-19, o‘pka fibrozlari, pnevmoniya
+                                        hamda
+                                        sog‘lom o‘pka to‘qimalarini to‘rt sinf bo‘yicha aniqlash uchun maxsus o‘qitilgan
+                                        konvolyutsion neyron tarmoq (CNN) modelidan foydalanadi. Tizim tasvirni
+                                        oldindan qayta ishlash, shovqindan tozalash va kontrastni kuchaytirish kabi
+                                        raqamli algoritmlar asosida yuqori aniqlikdagi diagnostik xulosani taqdim etadi.
+                                    </p>
+                                </div>
                             </div>
-                        </div>
                     </div>
+
+
                     <div class="row row-cards">
                         {% for item in first_four_results %}
                         <div class="col-12 col-md-6 col-lg-3">
-                            <div class="card card-sm p-4 p-lg-0">
-                                <a href="{% url 'diagnostic-result' item.id %}" class="d-block">
-                                    <img class="card-img-top" src="{{ item.original_image.url }}"  alt="{{ item.diagnosis }}">
+                            <div class="card card-sm mx-3 mx-md-0 mb-3">
+                                <a href="{% url 'diagnostic-result' item.id %}" class="d-block link-secondary">
+                                    <img class="card-img-top" src="{{ item.original_image.url }}"
+                                        alt="{{ item.diagnosis }}">
+                                    <!-- Klass ehtimolliklari -->
+                                    <div class="card-body">
+
+                                        <div class="mb-3">
+                                            <label class="mb-1">COVID-19</label>
+                                            <span class="float-end"><code
+                                                    class="pre-tests bg-transparent fs-4">{{ item.covid_prob }}%</code></span>
+                                            <div class="progress progress-sm">
+                                                <div class="progress-bar {% if item.diagnosis == 'COVID-19' %}bg-danger{% endif %}"
+                                                    style="width: 0%;" data-width="{{ item.covid_prob }}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="mb-1">Fibroz</label>
+                                            <span class="float-end"><code
+                                                    class="pre-tests bg-transparent fs-4">{{ item.fibrosis_prob }}%</code></span>
+                                            <div class="progress progress-sm">
+                                                <div class="progress-bar {% if item.diagnosis == 'Fibroz' %}bg-danger{% endif %}"
+                                                    style="width: 0%;" data-width="{{ item.fibrosis_prob }}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="mb-1">Sog'lom</label>
+                                            <span class="float-end"><code
+                                                    class="pre-tests bg-transparent fs-4">{{ item.normal_prob }}%</code></span>
+                                            <div class="progress progress-sm">
+                                                <div class="progress-bar {% if item.diagnosis == 'Sog‘lom' %}bg-success{% endif %}"
+                                                    style="width: 0%;" data-width="{{ item.normal_prob }}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label class="mb-1">Pnevmoniya</label>
+                                            <span class="float-end"><code
+                                                    class="pre-tests bg-transparent fs-4">{{ item.pneumonia_prob }}%</code></span>
+                                            <div class="progress progress-sm">
+                                                <div class="progress-bar {% if item.diagnosis == 'Pnevmoniya' %}bg-danger{% endif %}"
+                                                    style="width: 0%;" data-width="{{ item.pneumonia_prob }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="card-footer">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <h3 class="py-0 my-0">{{ item.diagnosis }}</h3>
+                                        <div class="d-flex align-items-center justify-content-center text-primary">
+                                            <h5 class="py-0 my-0">{{ item.diagnosis }}</h5>
                                             <i class="icon ti ti-arrow-right ms-2"></i>
                                         </div>
                                     </div>
