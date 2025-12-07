@@ -53,3 +53,10 @@ def apply_threshold(image):
 def save_processed_image(image, filename):
     success, encoded_image = cv2.imencode(".png", image)
     return ContentFile(encoded_image.tobytes(), name=filename)
+def is_grayscale(image):
+    if len(image.shape) == 2:
+        return True
+    if len(image.shape) == 3:
+        b, g, r = cv2.split(image)
+        return (b == g).all() and (g == r).all()
+    return False

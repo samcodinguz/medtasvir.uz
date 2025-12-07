@@ -4,7 +4,7 @@
 
 {% block content %}
 
-{% if result.check_list %}
+{% if not result or result.check_list %}
 <div class="card mb-4">
     <div class="card-body py-md-4">
         <form method="POST" enctype="multipart/form-data">

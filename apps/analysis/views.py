@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from apps.home import utils as home_utils
-from .utils import apply_clahe, apply_gaussian, apply_median, apply_threshold, predict_lung, save_processed_image
+from .utils import apply_clahe, apply_gaussian, apply_median, apply_threshold, predict_lung, save_processed_image, is_grayscale
 from .models import ImageProcessingResult
 import time
 import cv2
@@ -17,12 +17,18 @@ def diagnostic(request):
         file = request.FILES["image"]
         filename, img_content = home_utils.square_avatar(file)
 
+        
+
         # 1. Faylni vaqtincha saqlash
         path = default_storage.save("uploads/" + filename, img_content)
         full_path = default_storage.path(path)
 
         # 2. Rasmini o‘qish
         image = cv2.imread(full_path)
+
+        if not is_grayscale(image):
+            home_utils.messages.error(request, "Ushbu rasm tibbiy rentgen tasviri emas, tibbiy rentgen tasvirini yuklang")
+            return redirect('diagnostic')
 
         # 3. Preprocessing natijalari
         gaussian = apply_gaussian(image)

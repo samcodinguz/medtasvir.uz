@@ -22,7 +22,7 @@ def home(request):
 
     context = {
         'page_title': 'Tibbiy tasvirlar asosida avtomatik tashxislash platformasi',
-         'first_four_results': processed_results,
+         'processed_results': processed_results,
          'stats': stats,
     }
 
