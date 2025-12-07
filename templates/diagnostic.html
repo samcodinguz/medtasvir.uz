@@ -5,7 +5,7 @@
 {% block content %}
 
 <!-- FULLSCREEN TABLER LOADER -->
-<div id="fullpage-loader" class="page page-center" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#1e1e2f; z-index:9999;">
+<div id="fullpage-loader" class="page page-center" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: white; z-index:9999;">
     <div class="container container-slim py-4">
         <div class="text-center d-flex flex-column justify-content-center align-items-center vh-100">
             <div class="text-secondary mb-3">Bajarilmoqda...</div>
@@ -33,7 +33,7 @@
     </div>
 </div>
 
-{% if result %}
+{% if result and not result.check_list %}
 <!-- Natijalar bo‘limi -->
 <div class="card">
     <div class="card-header">
@@ -44,48 +44,126 @@
 
         <div class="row">
             <div class="col-md-6">
-                <h6>Yuklangan rasm</h6>
-                <img src="{{ result.original_image.url }}" class="img-fluid rounded shadow-sm mb-3">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h6 class="card-title">Yuklangan rasm</h6>
+                    </div>
+                </div>
+                <img src="{{ result.original_image.url }}" class="img-fluid rounded shadow-sm mb-3 w-100">
             </div>
 
             <div class="col-md-6">
-                <h6>Tashxis natijasi</h6>
-                <div>
-                    <strong>{{ result.diagnosis }}</strong><br>
-                    Ishonchlilik: <strong>{{ result.confidence }}%</strong>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h6 class="card-title">Tashxis natijasi</h6>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h3 class="card-title">
+                            <i class="icon ti ti-stethoscope me-2"></i> <span class="text-primary">Bemor:</span> {{ result.diagnosis }} {% if result.diagnosis != 'Sog‘lom' %}kasalligiga chalingan{% endif %}<br>
+                        </h3>
+                        <h3 class="card-title">
+                            <i class="icon ti ti-zoom me-2"></i> <span class="text-primary">Aniqlik:</span> {{ result.confidence }}%
+                        </h3>
+                    </div>
+                </div>
+                <!-- Klass ehtimolliklari -->
+                <div class="card mb-3">
+                    <div class="card-body">
+
+                        <h5 class="card-title">Klass ehtimolliklari</h5>
+
+                        <div class="mb-4">
+                            <label class="mb-3">COVID-19</label>
+                            <span class="float-end"><code class="pre-tests bg-transparent fs-3">{{ result.covid_prob|floatformat:16 }}%</code></span>
+                            <div class="progress progress-sm" style="height: 15px;">
+                                <div class="progress-bar {% if result.diagnosis == 'COVID-19' %}bg-danger{% endif %}"
+                                    style="width: 0%;"
+                                    data-width="{{ covid_prob }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="mb-3">Fibroz</label>
+                            <span class="float-end"><code class="pre-tests bg-transparent fs-3">{{ result.fibrosis_prob|floatformat:16 }}%</code></span>
+                            <div class="progress progress-sm" style="height: 15px;">
+                                <div class="progress-bar {% if result.diagnosis == 'Fibroz' %}bg-danger{% endif %}"
+                                    style="width: 0%;"
+                                    data-width="{{ fibrosis_prob }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="mb-3">Sog'lom</label>
+                            <span class="float-end"><code class="pre-tests bg-transparent fs-3">{{ result.normal_prob|floatformat:16 }}%</code></span>
+                            <div class="progress progress-sm" style="height: 15px;">
+                                <div class="progress-bar {% if result.diagnosis == 'Sog‘lom' %}bg-success{% endif %}"
+                                    style="width: 0%;"
+                                    data-width="{{ normal_prob }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="mb-3">Pnevmoniya</label>
+                            <span class="float-end"><code class="pre-tests bg-transparent fs-3">{{ result.pneumonia_prob|floatformat:16 }}%</code></span>
+                            <div class="progress progress-sm" style="height: 15px;">
+                                <div class="progress-bar {% if result.diagnosis == 'Pnevmoniya' %}bg-danger{% endif %}"
+                                    style="width: 0%;"
+                                    data-width="{{ pneumonia_prob }}">
+                                </div>
+                            </div>
+                        </div>
+                        {% if not result.check_list %}
+                        <form action="{% url 'diagnostic-save' %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary w-100">Diagnostik natijalarga saqlash</button>
+                        </form>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
-
         <hr>
-
-        <h5>🧪 Rasmni oldindan qayta ishlash natijalari</h5>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h6 class="card-title">Filter natijalari</h6>
+            </div>
+        </div>
         <div class="row text-center">
 
             <div class="col-md-3 mb-3">
                 <h6 class="card-title">Gaussian Blur</h6>
-                <img src="{{ result.gaussian_image.url }}" class="img-fluid rounded shadow-sm">
+                <img src="{{ result.gaussian_image.url }}" class="img-fluid rounded shadow-sm w-100">
             </div>
 
             <div class="col-md-3 mb-3">
                 <h6 class="card-title">CLAHE</h6>
-                <img src="{{ result.clahe_image.url }}" class="img-fluid rounded shadow-sm">
+                <img src="{{ result.clahe_image.url }}" class="img-fluid rounded shadow-sm w-100">
             </div>
 
             <div class="col-md-3 mb-3">
                 <h6 class="card-title">Median</h6>
-                <img src="{{ result.median_image.url }}" class="img-fluid rounded shadow-sm">
+                <img src="{{ result.median_image.url }}" class="img-fluid rounded shadow-sm w-100">
             </div>
 
             <div class="col-md-3 mb-3">
                 <h6 class="card-title">Threshold</h6>
-                <img src="{{ result.threshold_image.url }}" class="img-fluid rounded shadow-sm">
+                <img src="{{ result.threshold_image.url }}" class="img-fluid rounded shadow-sm w-100">
             </div>
 
         </div>
 
     </div>
 </div>
+{% endif %}
+
+{% endblock %}
+
+{% block js %}
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("analysis-form");
@@ -95,7 +173,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const bars = document.querySelectorAll(".progress-bar");
 
-{% endif %}
+    bars.forEach(bar => {
+        const targetWidth = bar.getAttribute("data-width");
 
+        bar.style.transition = "width 1.5s ease-in-out";
+        bar.style.width = "0%";
+
+        // Animation trigger
+        setTimeout(() => {
+            bar.style.width = targetWidth + "%";
+        }, 200);
+    });
+});
+</script>
 {% endblock %}

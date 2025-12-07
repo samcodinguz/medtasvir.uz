@@ -72,7 +72,7 @@
                     </div>
                     <!-- Content here -->
                     {% block content %}
-                    <div class="card">
+                    <div class="card mb-4">
                         <div class="card-body py-md-5">
                             <h1 class="card-title px-5 text-center mb-3">Tibbiy tasvirlar asosida avtomatik tashxislash platformasi</h1>
                             <p class="text-center mb-5">Tibbiy tasvirlarga raqamli ishlov berish va sun'iy intellekt algoritmlari asosida kasalliklarni avtomatik aniqlash tizimi</p>
@@ -80,6 +80,23 @@
                                 <a href="{% url 'diagnostic' %}" class="btn btn-primary btn-md-lg"><i class="ti ti-text-scan-2 fs-2 me-2"></i>Diagnostika boshlash</a>
                             </div>
                         </div>
+                    </div>
+                    <div class="row row-cards">
+                        {% for item in first_four_results %}
+                        <div class="col-12 col-md-6 col-lg-3">
+                            <div class="card card-sm p-4 p-lg-0">
+                                <a href="{% url 'diagnostic-result' item.id %}" class="d-block">
+                                    <img class="card-img-top" src="{{ item.original_image.url }}"  alt="{{ item.diagnosis }}">
+                                    <div class="card-footer">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <h3 class="py-0 my-0">{{ item.diagnosis }}</h3>
+                                            <i class="icon ti ti-arrow-right ms-2"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
                     {% endblock %}
                 </div>

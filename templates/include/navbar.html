@@ -249,9 +249,9 @@
                                         <span class="nav-link-title"> Diagnostika </span>
                                     </a>
                                 </li>
-                                <li class="nav-item {% if request.path == '/home/users' %}active{% endif %}">
-                                    <a class="nav-link {% if request.path == '/home/users' %}active{% endif %}"
-                                        href="">
+                                <li class="nav-item {% if request.path == '/diagnostics' %}active{% endif %}">
+                                    <a class="nav-link {% if request.path == '/diagnostics' %}active{% endif %}"
+                                        href="{% url 'diagnostics' %}">
                                         <span class="d-md-none d-xl-inline-block">
                                             <i class="ti ti-chart-bar fs-2 me-2"></i>
                                         </span>

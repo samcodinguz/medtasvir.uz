@@ -1,0 +1,68 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    {% for item in results %}
+    <div class="col-12 col-md-6 col-lg-3 mb-3">
+        <div class="card card-sm p-4 p-lg-0">
+            <a href="{% url 'diagnostic-result' item.id %}" class="d-block">
+                <img class="card-img-top" src="{{ item.original_image.url }}"  alt="{{ item.diagnosis }}">
+                <div class="card-footer">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <h3 class="py-0 my-0">{{ item.diagnosis }}</h3>
+                        <i class="icon ti ti-arrow-right ms-2"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="row px-2">
+    <div class="card">
+        <div class="card-footer">
+            <div class="row g-2 justify-content-center justify-content-sm-between">
+                <div class="col-auto d-flex align-items-center">
+                    <p class="m-0 text-secondary">
+                        <strong>{{ results.start_index }}</strong> dan <strong>{{ results.end_index }}</strong> gacha, jami
+                        <strong>{{ results.paginator.count }}</strong> ta foydalanuvchi
+                    </p>
+                </div>
+                <div class="col-auto">
+                    <ul class="pagination m-0 ms-auto">
+                        <!-- Prev button -->
+                        <li class="page-item {% if not results.has_previous %}disabled{% endif %}">
+                            <a class="page-link" href="{% if results.has_previous %}?page={{ results.previous_page_number }}{% else %}#{% endif %}">
+                                <i class="ti ti-chevron-left"></i>
+                            </a>
+                        </li>
+                        <!-- Page numbers -->
+                        {% for page in pagination_range %}
+                            {% if page == '...' %}
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                            {% elif page == results.number %}
+                                <li class="page-item active"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        <!-- Next button -->
+                        <li class="page-item {% if not results.has_next %}disabled{% endif %}">
+                            <a class="page-link" href="{% if results.has_next %}?page={{ results.next_page_number }}{% else %}#{% endif %}">
+                                <i class="ti ti-chevron-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block js %}{% endblock %}

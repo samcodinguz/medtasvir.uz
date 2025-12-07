@@ -18569,7 +18569,27 @@ body[data-bs-theme=dark] [data-bs-theme=light] {
   flex-direction: row;
   gap: 1rem;
 }
-
+.alert-1 {
+  --tblr-alert-color: var(--tblr-body-color);
+  --tblr-alert-bg: color-mix(in srgb, var(--tblr-alert-color) 10%, transparent);
+  --tblr-alert-padding-x: 1rem;
+  --tblr-alert-padding-y: 0.75rem;
+  --tblr-alert-margin-bottom: 1rem;
+  --tblr-alert-border-color: color-mix(in srgb, var(--tblr-alert-color) 20%, transparent);
+  --tblr-alert-border: var(--tblr-border-width) solid var(--tblr-alert-border-color);
+  --tblr-alert-border-radius: var(--tblr-border-radius);
+  --tblr-alert-link-color: inherit;
+  --tblr-alert-heading-font-weight: var(--tblr-font-weight-medium);
+  position: relative;
+  padding: var(--tblr-alert-padding-y) var(--tblr-alert-padding-x);
+  margin-bottom: var(--tblr-alert-margin-bottom);
+  background-color: color-mix(in srgb, var(--tblr-alert-bg), var(--tblr-bg-surface));
+  border-radius: var(--tblr-alert-border-radius);
+  border: var(--tblr-border-width) var(--tblr-border-style) var(--tblr-alert-border-color);
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
 .alert-heading {
   color: inherit;
   margin-bottom: 0.25rem;

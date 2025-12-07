@@ -1,0 +1,11 @@
+.pre-tests {
+  color: #404040 !important;
+}
+
+[data-bs-theme="dark"] .pre-tests {
+  color: #e5e5e5 !important;
+}
+
+[data-bs-theme="light"] .pre-tests {
+  color: #404040 !important;
+}

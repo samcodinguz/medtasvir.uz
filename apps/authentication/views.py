@@ -6,8 +6,8 @@ from django.contrib import messages
 def sign_in(request):
 
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST.get('username').strip()
+        password = request.POST.get('password').strip()
         remember_me = request.POST.get('remember_me')
 
         user = authenticate(request, username=username, password=password)
@@ -38,10 +38,10 @@ def sign_up(request):
 
     if request.method == 'POST':
         
-        full_name = request.POST.get('full_name')
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        confirm_password = request.POST.get('confirm_password')
+        full_name = request.POST.get('full_name').strip()
+        username = request.POST.get('username').strip()
+        password = request.POST.get('password').strip()
+        confirm_password = request.POST.get('confirm_password').strip()
         remember_me = request.POST.get('remember_me')
 
         if not full_name or not username or not password or not confirm_password:
