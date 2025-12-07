@@ -14,7 +14,19 @@ SECRET_KEY = 'django-insecure-=&z)g9m=61^&g$m*h)15c9)xql_%1tj3=hn*ac7lr4$#e#%i+m
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '*'
+    '127.0.0.1', 
+    'localhost', 
+    'samcoding-production.up.railway.app', 
+    'samcoding.uz', 
+    'www.samcoding.uz'
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://samcoding-production.up.railway.app', 
+    'https://samcoding.uz', 
+    'https://www.samcoding.uz',
+    'http://samcoding.uz',       # agar foydalanuvchi http ishlatsa
+    'http://www.samcoding.uz'
 ]
 
 
