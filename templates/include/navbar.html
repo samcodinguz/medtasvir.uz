@@ -1,0 +1,300 @@
+{% load static %}
+<div class="sticky-top">
+    <header class="navbar navbar-expand-md sticky-top d-print-none">
+        <div class="container-xl">
+            <!-- BEGIN NAVBAR TOGGLER -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu"
+                aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- END NAVBAR TOGGLER -->
+            <!-- BEGIN NAVBAR LOGO -->
+            <div class="navbar-brand d-none-navbar-horizontal pe-0 pe-md-3">
+                <a href="{% url 'home' %}" class="navbar-brand navbar-brand-autodark py-0" aria-label="medtasvir">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="navbar-brand-image m-0 p-0"
+                        style="width: 32px !important; height: 32px !important;"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="var(--tblr-primary, #066fd1)"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+
+                        <!-- Chap o'pka -->
+                        <path d="M6.081 20c1.612 0 2.919 -1.335 2.919 -2.98v-9.763
+                                c0 -.694 -.552 -1.257 -1.232 -1.257c-.205 0 -.405 .052 -.584 .15l-.13 .083
+                                c-1.46 1.059 -2.432 2.647 -3.404 5.824c-.42 1.37 -.636 2.962 -.648 4.775
+                                c-.012 1.675 1.261 3.054 2.877 3.161l.203 .007z"/>
+
+                        <!-- O'ng o'pka -->
+                        <path d="M17.92 20c-1.613 0 -2.92 -1.335 -2.92 -2.98v-9.763
+                                c0 -.694 .552 -1.257 1.233 -1.257c.204 0 .405 .052 .584 .15l.13 .083
+                                c1.46 1.059 2.432 2.647 3.405 5.824c.42 1.37 .636 2.962 .648 4.775
+                                c.012 1.675 -1.261 3.054 -2.878 3.161l-.202 .007z"/>
+
+                        <!-- Lung curve -->
+                        <path d="M9 12a3 3 0 0 0 3 -3a3 3 0 0 0 3 3"/>
+
+                        <!-- Traxeya -->
+                        <path d="M12 4v5"/>
+
+                    </svg>
+
+                    <h2 class="lexend p-0 m-0">MedTasvir</h2>
+                </a>
+            </div>
+            <!-- END NAVBAR LOGO -->
+            <div class="navbar-nav flex-row order-md-last">
+                <div class="nav-item d-none d-md-flex me-3">
+                    <div class="btn-list">
+                        <a href="#" class="nav-link" target="_blank" rel="noreferrer">
+                            <i class="icon ti ti-brand-telegram me-2"></i>
+                            Telegram
+                        </a>
+                        <a href="#" class="nav-link" target="_blank" rel="noreferrer">
+                            <i class="icon ti ti-brand-twitter me-2"></i>
+                            Twitter
+                        </a>
+                        <a href="#" class="nav-link" target="_blank" rel="noreferrer">
+                            <i class="icon ti ti-brand-youtube me-2"></i>
+                            YouTube
+                        </a>
+                    </div>
+                </div>
+                <div class="d-none d-md-flex">
+                    <div class="nav-item">
+                        <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Tungi rejimni yoqish"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            <i class="icon ti ti-moon"></i>
+                        </a>
+                        <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Kunduzgi rejimni yoqish"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            <i class="icon ti ti-sun"></i>
+                        </a>
+                    </div>
+                    {% if request.user.is_authenticated %}
+                    <div class="nav-item dropdown d-none d-md-flex">
+                        <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
+                            aria-label="Show notifications" data-bs-auto-close="outside" aria-expanded="false">
+                            <i class="ti ti-bell fs-2"></i>
+                            {% if notifications %}
+                            <span class="badge bg-red text-white">{{ notifications_unread }}</span>
+                            {% endif %}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
+                            <div class="card">
+                                <div class="card-header d-flex">
+                                    <h3 class="card-title">Bildirishnomalar</h3>
+                                    <div class="btn-close ms-auto" data-bs-dismiss="dropdown"></div>
+                                </div>
+                                <div class="list-group list-group-flush list-group-hoverable">
+                                    {% for notification in notifications %}
+                                    {% if notification.notif_type == 'device' %}
+                                    <div class="list-group-item">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto"><span
+                                                    class="status-dot status-dot-animated bg-danger d-block"></span>
+                                            </div>
+                                            <div class="col text-truncate">
+                                                <a href="{% url 'notifications' %}" class="text-body d-block mb-2">{{ notification.message }}</a>
+                                                <div class="d-block text-secondary text-truncate mt-n1">{{ notification.device_info|slice:":60" }}</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <a href="#" class="list-group-item-actions">
+                                                    <i class="ti ti-device-mobile text-muted fs-2"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <div class="list-group-item">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto"><span
+                                                    class="status-dot status-dot-animated bg-success d-block"></span>
+                                            </div>
+                                            <div class="col text-truncate">
+                                                <a href="" class="text-body d-block mb-2">Reyting berildi</a>
+                                                <div class="d-block text-secondary text-truncate mt-n1">Happy New Year |
+                                                    SamCoding Round #1 uchun {{ notification.message }} rating berildi
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <a href="#" class="list-group-item-actions">
+                                                    <i class="ti ti-chart-line text-muted fs-2"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% empty %}
+                                    <div class="list-group-item">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                Hozircha sizda yangi bildirishnomalar mavjud emas.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col ms-auto">
+                                            <a href="" class="btn btn-2 w-100"> <small>Barchasini ko'rish</small>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="nav-item dropdown d-none d-md-flex">
+                        <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
+                            aria-label="Show app menu" data-bs-auto-close="outside" aria-expanded="false">
+                            <i class="icon ti ti-apps"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">My Apps</div>
+                                    <div class="card-actions btn-actions">
+                                        <a href="#" class="btn-action">
+                                            <i class="icon ti ti-settings"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body scroll-y p-2" style="max-height: 50vh">
+                                    <div class="row g-0">
+                                        <div class="col-4">
+                                            <a href="#"
+                                                class="d-flex flex-column flex-center text-center text-secondary py-2 px-2 link-hoverable">
+                                                <img src="{% static 'static/brands/amazon.svg' %}"
+                                                    class="w-6 h-6 mx-auto mb-2" width="24" height="24" alt="" />
+                                                <span class="h5">Amazon</span>
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="#"
+                                                class="d-flex flex-column flex-center text-center text-secondary py-2 px-2 link-hoverable">
+                                                <img src="{% static 'static/brands/android.svg' %}"
+                                                    class="w-6 h-6 mx-auto mb-2" width="24" height="24" alt="" />
+                                                <span class="h5">Android</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if request.user.is_authenticated %}
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link d-flex lh-1 p-0 px-2" data-bs-toggle="dropdown"
+                        aria-label="Open user menu">
+                        <span class="avatar avatar-sm rounded-pill">
+                            <img src="{{ request.user.avatar.url }}" class="rounded-pill" alt="user">
+                        </span>
+                        <div class="d-none d-xl-block ps-2">
+                            <div>@{{ request.user.username }}</div>
+                            <div class="mt-1 small text-secondary">{{ request.user.full_name }}</div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <a href="" class="dropdown-item {% with '/home/users/'|add:request.user.username as target %}{% if request.path == target %}active{% endif %}{% endwith %}"><i class="icon ti ti-user"></i>Profil</a>
+                        <span class="d-block d-md-none">
+                            <a href="" class="dropdown-item {% if request.path == '/home/notifications' %}active{% endif %}">
+                                <i class="icon ti ti-bell"></i>Bildirishnomalar
+                                {% if notifications %}
+                                <span class="badge bg-red text-white">{{ notifications_unread }}</span>
+                                {% endif %}
+                            </a>
+                        </span>
+                        <a href="" class="dropdown-item {% if request.path == '/home/users/settings' %}active{% endif %}"><i class="icon ti ti-adjustments-horizontal"></i>Sozlamalar</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{% url 'sign-out' %}" class="dropdown-item">
+                            <i class="icon ti ti-power text-danger"></i>Chiqish
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    <header class="navbar-expand-md">
+        <div class="collapse navbar-collapse" id="navbar-menu">
+            <div class="navbar">
+                <div class="container-xl">
+                    <div class="row flex-column flex-md-row flex-fill align-items-center">
+                        <div class="col">
+                            <!-- BEGIN NAVBAR MENU -->
+                            <ul class="navbar-nav">
+                                <li class="nav-item {% if request.path == '/' %}active{% endif %}">
+                                    <a class="nav-link {% if request.path == '/' %}active{% endif %}"
+                                        href="{% url 'home' %}">
+                                        <span class="d-md-none d-xl-inline-block">
+                                            <i class="ti ti-home fs-2 me-2"></i>
+                                        </span>
+                                        <span class="nav-link-title"> Bosh sahifa </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item {% if request.path == '/diagnostic' %}active{% endif %}">
+                                    <a class="nav-link {% if request.path == '/diagnostic' %}active{% endif %}"
+                                        href="{% url 'diagnostic' %}">
+                                        <span class="d-md-none d-xl-inline-block">
+                                            <i class="ti ti-text-scan-2 fs-2 me-2"></i>
+                                        </span>
+                                        <span class="nav-link-title"> Diagnostika </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item {% if request.path == '/home/users' %}active{% endif %}">
+                                    <a class="nav-link {% if request.path == '/home/users' %}active{% endif %}"
+                                        href="">
+                                        <span class="d-md-none d-xl-inline-block">
+                                            <i class="ti ti-chart-bar fs-2 me-2"></i>
+                                        </span>
+                                        <span class="nav-link-title"> Diagnostik natijalar </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item {% if request.path == '/home/users' %}active{% endif %}">
+                                    <a class="nav-link {% if request.path == '/home/users' %}active{% endif %}"
+                                        href="">
+                                        <span class="d-md-none d-xl-inline-block">
+                                            <i class="ti ti-phone fs-2 me-2"></i>
+                                        </span>
+                                        <span class="nav-link-title"> Bog'lanish </span>
+                                    </a>
+                                </li>
+                                {% if not request.user.is_authenticated %}
+                                <hr class="my-2 d-block d-md-none">
+                                <li class="nav-item d-block d-md-none">
+                                    <a class="nav-link" href="{% url 'sign-in' %}">
+                                        <span class="d-md-none d-lg-inline-block">
+                                            <i class="ti ti-login fs-2 me-2"></i>
+                                        </span>
+                                        <span class="nav-link-title"> Kirish / Ro'yxatdan o'tish </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                            <!-- END NAVBAR MENU -->
+                        </div>
+                        <div class="col col-md-auto d-none d-md-block">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    {% if not request.user.is_authenticated %}
+                                    <a class="nav-link" href="{% url 'sign-in' %}">
+                                        <span class="nav-link-title"> Kirish / Ro'yxatdan o'tish </span>
+                                    </a>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>

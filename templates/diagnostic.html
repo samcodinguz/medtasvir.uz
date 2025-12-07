@@ -1,0 +1,101 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+
+<!-- FULLSCREEN TABLER LOADER -->
+<div id="fullpage-loader" class="page page-center" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#1e1e2f; z-index:9999;">
+    <div class="container container-slim py-4">
+        <div class="text-center d-flex flex-column justify-content-center align-items-center vh-100">
+            <div class="text-secondary mb-3">Bajarilmoqda...</div>
+            <div class="progress progress-sm">
+                <div class="progress-bar progress-bar-indeterminate"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card mb-4">
+    <div class="card-body py-md-4">
+        <form method="POST" enctype="multipart/form-data" id="analysis-form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-9">
+                    <input type="file" class="form-control" name="image" required>
+                </div>
+                <div class="col-3">
+                    <button class="btn btn-primary w-100">Tahlil qilish</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if result %}
+<!-- Natijalar bo‘limi -->
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">Tahlil natijalari</h5>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-6">
+                <h6>Yuklangan rasm</h6>
+                <img src="{{ result.original_image.url }}" class="img-fluid rounded shadow-sm mb-3">
+            </div>
+
+            <div class="col-md-6">
+                <h6>Tashxis natijasi</h6>
+                <div>
+                    <strong>{{ result.diagnosis }}</strong><br>
+                    Ishonchlilik: <strong>{{ result.confidence }}%</strong>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <h5>🧪 Rasmni oldindan qayta ishlash natijalari</h5>
+        <div class="row text-center">
+
+            <div class="col-md-3 mb-3">
+                <h6 class="card-title">Gaussian Blur</h6>
+                <img src="{{ result.gaussian_image.url }}" class="img-fluid rounded shadow-sm">
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <h6 class="card-title">CLAHE</h6>
+                <img src="{{ result.clahe_image.url }}" class="img-fluid rounded shadow-sm">
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <h6 class="card-title">Median</h6>
+                <img src="{{ result.median_image.url }}" class="img-fluid rounded shadow-sm">
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <h6 class="card-title">Threshold</h6>
+                <img src="{{ result.threshold_image.url }}" class="img-fluid rounded shadow-sm">
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("analysis-form");
+
+    form.addEventListener("submit", function () {
+        document.getElementById("fullpage-loader").style.display = "block";
+    });
+});
+</script>
+
+{% endif %}
+
+{% endblock %}

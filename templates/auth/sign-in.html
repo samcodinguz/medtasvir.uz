@@ -1,0 +1,130 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>{% block title %}{{ page_title }}{% endblock %}</title>
+    <!-- BEGIN GLOBAL THEME SCRIPT -->
+    <script src="{% static 'dist/js/tabler-theme.min.js' %}"></script>
+    <!-- END GLOBAL THEME SCRIPT -->
+    {% include 'include/css-links.html' %}
+</head>
+
+<body>
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 1080">
+        {% for message in messages %}
+        <div class="alert alert-important alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %} alert-dismissible"
+            role="alert">
+            <h4 class="alert-heading me-5">
+                {% if message.tags == 'error' %}<i class="icon ti ti-info-circle me-1"></i>{% else %}<i
+                    class="icon ti ti-check me-1"></i>{% endif %}
+                {{ message }}
+            </h4>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="alert"
+                aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="page page-center">
+        <div class="container container-tight py-4">
+            <div class="text-center mb-4">
+                <a href="{% url 'home' %}" class="navbar-brand navbar-brand-autodark" aria-label="SamCoding">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        fill="currentColor" class="navbar-brand-image" style="width: 48px !important; height: 48px !important;">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path
+                            d="M17 2a5 5 0 0 1 5 5v10a5 5 0 0 1 -5 5h-10a5 5 0 0 1 -5 -5v-10a5 5 0 0 1 5 -5zm-1 12h-3a1 1 0 0 0 0 2h3a1 1 0 0 0 0 -2m-7.293 -5.707a1 1 0 0 0 -1.414 0l-.083 .094a1 1 0 0 0 .083 1.32l2.292 2.293l-2.292 2.293a1 1 0 0 0 1.414 1.414l3 -3a1 1 0 0 0 0 -1.414z"
+                            fill="#066fd1" style="fill: var(--tblr-primary, #066fd1)" />
+                    </svg>
+                    <h1 class="lexend" style="margin-top: 5px;">SamCoding</h1>
+                </a>
+            </div>
+            {% block content %}
+            <div class="card card-md">
+                <div class="card-body">
+                    <h2 class="h2 text-center mb-4">{{ page_title }}</h2>
+                    <form method="POST" autocomplete="off" novalidate>
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Foydalanuvchi nomi</label>
+                            <input name="username" type="text" class="form-control" placeholder="Your username"
+                                autocomplete="off" />
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">
+                                Parol
+                                <span class="form-label-description">
+                                    <a href="#">Parolni unitdingizmi?</a>
+                                </span>
+                            </label>
+                            <div class="input-group input-group-flat">
+                                <input name="password" id="password" type="password" class="form-control"
+                                    placeholder="Your password" autocomplete="off" />
+                                <span class="input-group-text">
+                                    <a href="#" class="link-secondary" title="Parolni ko'rsatish"
+                                        data-bs-toggle="tooltip"
+                                        onclick="togglePassword('password', 'toggleIcon1', event)">
+                                        <i id="toggleIcon1" class="icon ti ti-eye"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-check">
+                                <input name="remember_me" type="checkbox" class="form-check-input" />
+                                <span class="form-check-label">Meni eslab qoling</span>
+                            </label>
+                        </div>
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-primary w-100">Kirish</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="hr-text">yoki</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <a href="#" class="btn btn-4 w-100">
+                                <i class="icon ti ti-brand-telegram"></i>
+                                Telegram bilan
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="#" class="btn btn-4 w-100">
+                                <i class="icon ti ti-brand-github"></i>
+                                Github bilan
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center text-secondary mt-3">Hali akkountingiz yo'qmi? <a href="{% url 'sign-up' %}"
+                    tabindex="-1">Ro'yxatdan o'tish</a></div>
+            {% endblock %}
+        </div>
+    </div>
+    {% include 'include/settings.html' %}
+    {% include 'include/js-links.html' %}
+    <script>
+        function togglePassword(inputId, iconId, event) {
+            event.preventDefault();
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('ti-eye');
+                icon.classList.add('ti-eye-off');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('ti-eye-off');
+                icon.classList.add('ti-eye');
+            }
+        }
+    </script>
+</body>
+
+</html>
