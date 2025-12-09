@@ -73,18 +73,23 @@ def diagnostic(request):
     return render(request, 'diagnostic.html', context)
 
 def diagnostics(request):
-    results = ImageProcessingResult.objects.order_by('-created_at')
-    
-    paginator = home_utils.Paginator(results, 12)
-    page_number = request.GET.get('page')
-    results = paginator.get_page(page_number)
-    pagination_range = home_utils.get_pagination_range(results.number, paginator.num_pages)
-
     context = {
         'page_title': 'Barcha diagnostikalar ro\'yxati',
-        'pagination_range': pagination_range,
-        'results': results
     }
+    if request.user.is_authenticated:
+        results = ImageProcessingResult.objects.filter(user=request.user).order_by('-created_at')
+    
+        paginator = home_utils.Paginator(results, 12)
+        page_number = request.GET.get('page')
+        results = paginator.get_page(page_number)
+        pagination_range = home_utils.get_pagination_range(results.number, paginator.num_pages)
+
+        context['pagination_range'] = pagination_range
+        context['results'] = results
+    else:
+        context['results'] = []
+
+        
     return render(request, 'diagnostics.html', context)
 
 def diagnostic_result(request, item_id):
