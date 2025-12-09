@@ -23,7 +23,7 @@ def diagnostic(request):
         image = cv2.imread(full_path)
 
         if not is_grayscale(image):
-            home_utils.messages.error(request, "Ushbu rasm tibbiy rentgen tasviri emas, tibbiy rentgen tasvirini yuklang")
+            home_utils.messages.error(request, "Yuklangan rasm tibbiy rentgen tasviri talablari bo‘yicha mos kelmadi. Iltimos sifatli rentgen tasvirini yuklang")
             return redirect('diagnostic')
 
         gaussian = apply_gaussian(image)
