@@ -16,11 +16,10 @@ def sign_in(request):
             login(request, user)
             messages.success(request, 'Tizimga muvaffaqiyatli kirdingiz')
             
-            # Sessiya muddati
             if remember_me:
-                request.session.set_expiry(7200)  # 2 soat
+                request.session.set_expiry(7200)
             else:
-                request.session.set_expiry(1800)  # 30 daqiqa
+                request.session.set_expiry(1800)
             
             return redirect('home')
         

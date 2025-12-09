@@ -16,11 +16,17 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1', 
     'localhost', 
-    'medtasvir.up.railway.app'
+    'medtasvir.up.railway.app',
+    'medtasvir.uz',
+    'www.medtasvir.uz'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://medtasvir.up.railway.app'
+    'https://127.0.0.1',
+    'https://localhost',
+    'https://medtasvir.up.railway.app',
+    'https://medtasvir.uz',
+    'https://www.medtasvir.uz'
 ]
 
 

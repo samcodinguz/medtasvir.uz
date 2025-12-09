@@ -13,7 +13,6 @@ class ImageProcessingResult(models.Model):
     diagnosis = models.CharField(max_length=255, null=True, blank=True)
     confidence = models.FloatField(null=True, blank=True)
 
-    # 4 ta klass foizlari
     covid_prob = models.FloatField(null=True, blank=True)
     fibrosis_prob = models.FloatField(null=True, blank=True)
     normal_prob = models.FloatField(null=True, blank=True)

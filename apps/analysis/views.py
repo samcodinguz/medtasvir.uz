@@ -17,35 +17,27 @@ def diagnostic(request):
         file = request.FILES["image"]
         filename, img_content = home_utils.square_avatar(file)
 
-        
-
-        # 1. Faylni vaqtincha saqlash
         path = default_storage.save("uploads/" + filename, img_content)
         full_path = default_storage.path(path)
 
-        # 2. Rasmini o‘qish
         image = cv2.imread(full_path)
 
         if not is_grayscale(image):
             home_utils.messages.error(request, "Ushbu rasm tibbiy rentgen tasviri emas, tibbiy rentgen tasvirini yuklang")
             return redirect('diagnostic')
 
-        # 3. Preprocessing natijalari
         gaussian = apply_gaussian(image)
         clahe = apply_clahe(image)
         median = apply_median(image)
         threshold = apply_threshold(image)
 
-        # 4. CNN tashxisi
         diagnosis, confidence, probs = predict_lung(image)
 
-        # 5. Preprocessed rasmlarni File formati bilan saqlash
         gaussian_file = save_processed_image(gaussian, "gaussian_" + file.name)
         clahe_file = save_processed_image(clahe, "clahe_" + file.name)
         median_file = save_processed_image(median, "median_" + file.name)
         threshold_file = save_processed_image(threshold, "threshold_" + file.name)
 
-        # 6. Bazaga yozish
         ImageProcessingResult.objects.create(
             user=request.user,
             original_image=path,

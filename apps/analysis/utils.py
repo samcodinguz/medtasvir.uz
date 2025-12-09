@@ -9,8 +9,6 @@ MODEL_PATH = os.path.join(settings.BASE_DIR, "apps", "analysis", "model", "lung_
 
 model = tf.keras.models.load_model(MODEL_PATH)
 
-# 4 ta klass nomi — aynan TRAININGdagi tartib:
-# {'COVID': 0, 'Fibrosis': 1, 'Normal': 2, 'Pneumonia': 3}
 CLASSES = ["COVID-19", "Fibroz", "Sog‘lom", "Pnevmoniya"]
 
 
@@ -18,19 +16,11 @@ def predict_lung(image):
     img = cv2.resize(image, (224, 224))
     img = img / 255.0
     img = np.expand_dims(img, axis=0)
-
-    prediction = model.predict(img)[0]  # 4 ta probability chiqadi
-
-    # Har bir klass uchun foizga o'tkazish
+    prediction = model.predict(img)[0]
     probabilities = {CLASSES[i]: float(prediction[i]) for i in range(len(CLASSES))}
-
-    # Eng ehtimolli klass
     diagnosis = CLASSES[np.argmax(prediction)]
     confidence = float(np.max(prediction))
-
     return diagnosis, confidence, probabilities
-
-
 
 def apply_clahe(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -49,10 +39,10 @@ def apply_threshold(image):
     _, th = cv2.threshold(gray, 120, 255, cv2.THRESH_BINARY)
     return th
 
-
 def save_processed_image(image, filename):
     success, encoded_image = cv2.imencode(".png", image)
     return ContentFile(encoded_image.tobytes(), name=filename)
+
 def is_grayscale(image):
     if len(image.shape) == 2:
         return True
